@@ -37,15 +37,3 @@ If the skill is working correctly, the output will follow the exact markdown str
 3. It will feature an "AI Answer Block" definition (40-60 words).
 4. It will contain proper H2 sections for Problem, Solution, Benefits, Features, and FAQ sequences.
 5. It will incorporate list structures to optimize for AEO.
-
-## Publishing to GitHub
-
-To publish this skill to GitHub, run the following commands in this directory:
-```bash
-git init
-git add .
-git commit -m "Initial commit: Add SEO/AEO landing page skill"
-git branch -M main
-git remote add origin <your-github-repo-url>
-git push -u origin main
-```

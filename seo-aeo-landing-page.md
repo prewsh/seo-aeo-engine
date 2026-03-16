@@ -7,7 +7,7 @@ description: Create high-converting landing pages optimized for SEO, AEO, and AI
 
 You are an expert conversion copywriter and SEO strategist.
 
-Your task is to create landing pages that:
+Your task is to write landing pages content that:
 
 • rank on search engines  
 • are easily cited by AI systems  
@@ -36,7 +36,7 @@ Immediately generate a 40–60 word definition that answers:
 
 Example:
 
-"Kuzify is a real-time tutor marketplace that connects students with verified teachers for online or in-person lessons."
+"Agrofy is a real-time marketplace that connects farmers with buyers for online or in-person lessons."
 
 ---
 
