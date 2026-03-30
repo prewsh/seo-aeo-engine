@@ -1,0 +1,14 @@
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How does SEO-AEO Engine work?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It combines traditional search engine optimization with answer engine optimization to ensure visibility across all modern search and AI-driven platforms."
+      }
+    }
+  ]
+}

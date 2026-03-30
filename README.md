@@ -1,39 +1,75 @@
-# SEO & AEO Landing Page Generator Skill
+# SEO-AEO Engine 🚀
 
-An Antigravity AI skill designed to generate high-converting landing pages optimized for Search Engine Optimization (SEO) and Answer Engine Optimization (AEO).
+An open-source AI-powered SEO + AEO (Answer Engine Optimization) growth engine for startups. Build topical authority, dominate search results, and optimize for AI-driven answer engines in one automated workflow.
 
-## What This Skill Does
+## 🌟 Overview
 
-This skill transforms your AI agent into an expert conversion copywriter and SEO strategist. When invoked, it ensures the generated landing page contains:
-- **SEO Elements**: Optimized H1s, meta tags, and natural keyword density.
-- **AEO Elements**: "AI Answer Blocks" designed for LLM summarization (e.g., ChatGPT, Perplexity citations), structured data like bullet points, and clear FAQs.
-- **Conversion-Optimized Structure**: A proven flow from Hero section down to final CTA.
+The **SEO-AEO Engine** is designed to solve the complexity of modern content marketing. It doesn't just write articles; it builds entire semantic ecosystems. By combining traditional SEO best practices with cutting-edge AEO strategies, this engine ensures your content is both discoverable by Google and citable by AI models like Perplexity, ChatGPT, and Gemini.
 
-## How to Use It
+## 🛠 Features
 
-### Global Usage (Across all projects)
-To make this skill available globally to your Antigravity agent, copy the `seo-aeo-landing-page.md` file into your global skills directory (typically `~/.agents/skills/` or `~/.gemini/skills/` depending on your setup).
+- **Semantic Intelligence:** Automated keyword research and topic clustering.
+- **AEO-First Content:** Landing pages and blog posts with built-in "Answerability" signals.
+- **Automated Audits:** Dual SEO + AEO quality checks to ensure maximum performance.
+- **Structured Data:** Automated generation of Product and FAQ schema (JSON-LD).
+- **Internal Linking:** Data-driven anchor text and link recommendations.
 
-### Internal Project Usage (Local)
-To use it only within a specific project repository:
-1. Create a `_agents/skills` or `.agents/skills` folder in the root of your project.
-2. Place `seo-aeo-landing-page.md` inside that folder.
-3. The Antigravity agent will now have access to this skill context when working inside this repository.
+## ⚙️ Installation
 
-## How to Test It
+To get started with the SEO-AEO Engine, clone the repository and install the dependencies:
 
-You can test that the skill is loaded and working correctly by prompting your Antigravity assistant.
+```bash
+git clone https://github.com/mrprewsh/seo-aeo-engine.git
+cd seo-aeo-engine
+npm install
+```
 
-**Try explicit invocation:**
-> Use the `seo-aeo-landing-page` skill to generate a landing page for an AI tutoring platform.
+## 🚀 Running the Orchestrator
 
-**Try implicit invocation:**
-> Generate an SEO landing page for a teacher marketplace.
+The orchestrator runs the entire content generation chain from a single keyword or topic.
 
-### Verifying the Output
-If the skill is working correctly, the output will follow the exact markdown structure defined in the skill:
-1. It will begin with an H1 definition prompt.
-2. It will include Meta Title and Meta Description suggestions.
-3. It will feature an "AI Answer Block" definition (40-60 words).
-4. It will contain proper H2 sections for Problem, Solution, Benefits, Features, and FAQ sequences.
-5. It will incorporate list structures to optimize for AEO.
+```bash
+npx seo-aeo-orchestrate "your-primary-keyword"
+```
+
+The workflow follows a structured 8-step process:
+1. **Keyword Research** -> 2. **Landing Page Writer** -> 3. **Meta Generator** -> 4. **Content Cluster** -> 5. **Blog Writer** -> 6. **Quality Auditor** -> 7. **Internal Linking** -> 8. **Schema Generator**
+
+## 🧠 Skills Detail
+
+| Skill | Description |
+| :--- | :--- |
+| **Keyword Research** | Identifies high-value search terms and classifies search intent. |
+| **Landing Page Writer** | Crafts high-converting, search-ready landing pages. |
+| **Meta Description Generator** | Writes CTR-optimized titles and descriptions. |
+| **Content Cluster** | Maps out a topical authority structure for your niche. |
+| **Blog Writer** | Produates long-form, authoritative blog articles. |
+| **Content Quality Auditor** | Audits content against SEO best practices and AEO signals. |
+| **Internal Linking** | Suggests optimal link paths between your pages. |
+| **Schema Generator** | Generates valid JSON-LD markup for rich search results. |
+
+## 📖 Examples
+
+### 1. SaaS Product: "Syncro - Project Management for Remote Teams"
+- **Focus:** Transactional keywords like "remote project management software".
+- **Workflow Output:**
+    - A landing page showcasing "Syncro's" features and pricing.
+    - A content cluster around "remote team productivity".
+    - A deep-dive blog post on "Managing Distributed Engineering Teams".
+    - FAQ schema for the landing page regarding features and integrations.
+
+### 2. Fintech App: "PennyWise - Automated Budgeting"
+- **Focus:** Informational/Commercial keywords like "automated money management app".
+- **Workflow Output:**
+    - A landing page focusing on security and automation.
+    - A topic map covering "financial wellness" and "savings strategies".
+    - A blog post titled "5 Ways Automated Budgeting Saves You $500/Month".
+    - Product schema highlighting app ratings and key benefits.
+
+## 🤝 Contributing
+
+We welcome contributions! Please see our [CONTRIBUTING.md](CONTRIBUTING.md) for details on how to get involved.
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

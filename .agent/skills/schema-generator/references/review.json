@@ -1,0 +1,18 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Review",
+  "itemReviewed": {
+    "@type": "Product",
+    "name": "SEO-AEO Engine"
+  },
+  "reviewRating": {
+    "@type": "Rating",
+    "ratingValue": "5",
+    "bestRating": "5"
+  },
+  "author": {
+    "@type": "Person",
+    "name": "Digital Marketer"
+  },
+  "reviewBody": "Essential for any modern content strategy."
+}
