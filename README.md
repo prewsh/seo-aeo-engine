@@ -193,34 +193,271 @@ python --version
 ---
 
 ## Installation
+
+### One-line install — works everywhere
+
 ```bash
-# 1. Clone the repository
+npx seo-aeo-engine
+```
+
+Installs all 8 skills and the orchestrator workflow into `.agent/skills/`
+and `.agent/workflows/` for Antigravity by default.
+
+---
+
+### Install for your specific tool
+
+```bash
+# Antigravity — workspace (default)
+npx seo-aeo-engine --antigravity
+
+# Antigravity — global (available across all your projects)
+npx seo-aeo-engine --antigravity-global
+
+# Claude Code
+npx seo-aeo-engine --claude
+
+# Gemini CLI
+npx seo-aeo-engine --gemini
+
+# Codex CLI (OpenAI)
+npx seo-aeo-engine --codex
+
+# Cursor
+npx seo-aeo-engine --cursor
+
+# OpenCode
+npx seo-aeo-engine --opencode
+
+# Custom path
+npx seo-aeo-engine --path ./my-skills-folder
+```
+
+---
+
+### Verify installation
+
+```bash
+# Check all 8 skills are present
+ls .agent/skills/
+
+# Expected output:
+# blog-writer
+# content-cluster
+# content-quality-auditor
+# internal-linking
+# keyword-research
+# landing-page-writer
+# meta-description-generator
+# schema-generator
+```
+
+---
+
+### Manual install (alternative)
+
+If you prefer to clone directly:
+
+```bash
 git clone https://github.com/mrprewsh/seo-aeo-engine.git
 cd seo-aeo-engine
-
-# 2. Install Python dependencies for the scripts
 pip install -r requirements.txt
-
-# 3. Register the skills with your Antigravity agent
-antigravity skills install .agent/skills/
-
-# 4. Register the orchestrator workflow
-antigravity workflows install .agent/workflows/
-
-# 5. Verify installation — lists all active skills
-antigravity skills list
 ```
 
-You should see all 8 skills listed as active:
+Then copy `.agent/skills/` into the correct path for your tool
+using the compatibility table below.
+
+---
+
+## Using With Your AI Coding Agent
+
+Install once with the flag for your tool.
+All 8 skills work across every major AI coding agent.
+
+### Compatibility Table
+
+| Tool | Install Command | Skills Path | Invoke Syntax |
+|:-----|:----------------|:------------|:--------------|
+| **Antigravity** | `npx seo-aeo-engine --antigravity` | `.agent/skills/` | `Use @keyword-research to research [topic]` |
+| **Claude Code** | `npx seo-aeo-engine --claude` | `.claude/skills/` | `>> /keyword-research research [topic]` |
+| **Gemini CLI** | `npx seo-aeo-engine --gemini` | `.gemini/skills/` | `Use keyword-research to research [topic]` |
+| **Codex CLI** | `npx seo-aeo-engine --codex` | `.codex/skills/` | `Use keyword-research to research [topic]` |
+| **Cursor** | `npx seo-aeo-engine --cursor` | `.cursor/skills/` | `@keyword-research research [topic]` |
+| **OpenCode** | `npx seo-aeo-engine --opencode` | `.agents/skills/` | `opencode run @keyword-research [topic]` |
+
+---
+
+### Antigravity
+
+```bash
+# Install
+npx seo-aeo-engine --antigravity
+
+# Run the full 8-step orchestrator
+antigravity run seo-aeo-orchestrator \
+  --topic "remote project management software" \
+  --business "SaaS tool for remote engineering teams" \
+  --audience "engineering managers and startup founders" \
+  --goal "convert"
+
+# Run a single skill
+antigravity skill run keyword-research --topic "your keyword"
+antigravity skill run content-quality-auditor --input-type text \
+  --content "paste content here" --keyword "your keyword"
 ```
-✅ keyword-research
-✅ landing-page-writer
-✅ meta-description-generator
-✅ content-cluster
-✅ blog-writer
-✅ content-quality-auditor
-✅ internal-linking
-✅ schema-generator
+
+---
+
+### Claude Code
+
+```bash
+# Install
+npx seo-aeo-engine --claude
+```
+
+Inside your Claude Code session:
+
+```
+# Keyword research
+>> /keyword-research research remote project management software
+   for an audience of engineering managers, goal: convert
+
+# Write a landing page
+>> /landing-page-writer write a landing page for Syncro
+   primary keyword: remote project management software
+   audience: engineering managers
+   cta: Start Free Trial
+
+# Audit content
+>> /content-quality-auditor audit this content: [paste content]
+   primary keyword: remote project management software
+
+# Generate schema
+>> /schema-generator generate FAQPage and Product schema
+   for this landing page: [paste content]
+
+# Write a blog post
+>> /blog-writer write a cluster article titled
+   "How to Manage a Remote Engineering Team"
+   keyword: managing remote engineering teams
+   tone: authoritative
+```
+
+> **Tip:** Skills auto-activate when your prompt matches their
+> trigger phrases. Use the `/skill-name` prefix for precision
+> when you want a specific skill to run.
+
+---
+
+### Gemini CLI
+
+```bash
+# Install
+npx seo-aeo-engine --gemini
+```
+
+Inside your Gemini CLI session:
+
+```
+Use keyword-research to research "automated budgeting app"
+for a millennial audience focused on personal finance.
+Goal: convert.
+
+Use content-cluster to build a topic map around
+"automated budgeting app" for a personal finance audience.
+
+Use blog-writer to write a cluster article titled
+"5 Ways Automated Budgeting Saves You $500 a Month"
+targeting keyword: automated savings app
+tone: conversational
+
+Use content-quality-auditor to audit this content
+for SEO and AEO signals: [paste content]
+primary keyword: automated budgeting app
+```
+
+---
+
+### Codex CLI
+
+```bash
+# Install
+npx seo-aeo-engine --codex
+```
+
+Inside your Codex CLI session:
+
+```
+Use keyword-research to research "AI content SEO tool"
+for a SaaS audience of content marketers.
+Goal: rank.
+
+Use landing-page-writer to write a landing page for
+an AI SEO tool. Primary keyword: AI content SEO tool.
+Audience: content marketers and SEO teams.
+CTA: Start Free Trial.
+
+Use schema-generator to generate FAQPage and Article
+schema for this blog post: [paste content]
+
+Use internal-linking to map link opportunities between
+these pages: [paste page list]
+Focus page: landing page
+```
+
+---
+
+### Cursor
+
+```bash
+# Install
+npx seo-aeo-engine --cursor
+```
+
+Inside Cursor's Chat panel:
+
+```
+@keyword-research research "fintech app Nigeria"
+for young professionals aged 25-35. Goal: all.
+
+@landing-page-writer write a landing page for PennyWise
+primary keyword: automated budgeting app
+audience: millennials managing personal finances
+cta: Start Saving Automatically
+
+@content-quality-auditor review this landing page:
+[paste content]
+primary keyword: automated budgeting app
+
+@meta-description-generator write meta tags for this page:
+[paste content]
+primary keyword: automated budgeting app
+page type: landing-page
+```
+
+---
+
+### OpenCode
+
+```bash
+# Install
+npx seo-aeo-engine --opencode
+```
+
+Inside your OpenCode session:
+
+```bash
+opencode run @keyword-research \
+  "research AI writing tools for content teams"
+
+opencode run @blog-writer \
+  "write a blog post titled How AI Is Changing SEO
+   keyword: AI SEO tools
+   audience: content managers
+   tone: informational"
+
+opencode run @schema-generator \
+  "generate FAQPage schema for this page: [paste content]"
 ```
 
 ---
