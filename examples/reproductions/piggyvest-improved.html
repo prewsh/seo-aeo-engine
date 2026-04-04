@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Online Savings App Nigeria | Save, Invest & Grow | PiggyVest</title>
+  <meta name="description" content="PiggyVest helps over 6 million Nigerians save automatically, earn higher interest, and grow money in naira and dollars. Free to join. No minimum balance." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --green-dark: #0a2e1a;
+      --green-primary: #1a6b3a;
+      --green-mid: #22883f;
+      --green-light: #2daf52;
+      --green-accent: #3dcc6a;
+      --green-glow: rgba(61,204,106,0.15);
+      --cream: #f5f0e8;
+      --white: #ffffff;
+      --text-primary: #0d1a12;
+      --text-secondary: #3d5447;
+      --text-muted: #6b8a75;
+      --card-bg: #f9fdf9;
+      --border: #d4e8da;
+      --gold: #c9a227;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--white);
+      color: var(--text-primary);
+      line-height: 1.65;
+      font-size: 16px;
+    }
+
+    /* ── NAV ── */
+    nav {
+      background: var(--green-dark);
+      padding: 0 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 68px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--green-accent);
+      letter-spacing: -0.5px;
+    }
+    .logo span { color: var(--white); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--white); }
+    .nav-cta {
+      background: var(--green-accent);
+      color: var(--green-dark);
+      font-weight: 700;
+      font-size: 0.875rem;
+      padding: 0.55rem 1.25rem;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .nav-cta:hover { background: #52e080; transform: translateY(-1px); }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(145deg, var(--green-dark) 0%, #0f3d22 60%, #163325 100%);
+      padding: 100px 5% 90px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -80px; left: 50%;
+      transform: translateX(-50%);
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(61,204,106,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: var(--green-glow);
+      border: 1px solid rgba(61,204,106,0.3);
+      color: var(--green-accent);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0.35rem 0.9rem;
+      border-radius: 100px;
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.3px;
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.6rem);
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1.1;
+      letter-spacing: -1.5px;
+      max-width: 750px;
+      margin: 0 auto 1rem;
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: var(--green-accent);
+    }
+    .hero-sub {
+      font-size: 1.15rem;
+      color: rgba(255,255,255,0.7);
+      max-width: 520px;
+      margin: 0 auto 1.5rem;
+      font-weight: 400;
+    }
+    .aeo-block {
+      background: rgba(61,204,106,0.08);
+      border-left: 3px solid var(--green-accent);
+      padding: 1rem 1.5rem;
+      border-radius: 0 10px 10px 0;
+      max-width: 680px;
+      margin: 0 auto 2.5rem;
+      text-align: left;
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.85);
+      font-style: italic;
+      line-height: 1.6;
+    }
+    .hero-ctas {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+    .btn-primary {
+      background: var(--green-accent);
+      color: var(--green-dark);
+      font-weight: 800;
+      font-size: 1rem;
+      padding: 0.85rem 2rem;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: all 0.2s;
+      box-shadow: 0 4px 20px rgba(61,204,106,0.35);
+    }
+    .btn-primary:hover { background: #52e080; transform: translateY(-2px); box-shadow: 0 8px 30px rgba(61,204,106,0.4); }
+    .btn-secondary {
+      background: transparent;
+      color: var(--white);
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 0.85rem 2rem;
+      border-radius: 10px;
+      text-decoration: none;
+      border: 1.5px solid rgba(255,255,255,0.25);
+      transition: all 0.2s;
+    }
+    .btn-secondary:hover { border-color: rgba(255,255,255,0.6); background: rgba(255,255,255,0.06); }
+    .trust-bar {
+      display: flex;
+      gap: 2rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: rgba(255,255,255,0.6);
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+    .trust-item .dot { width: 6px; height: 6px; background: var(--green-accent); border-radius: 50%; }
+
+    /* ── SECTIONS ── */
+    section { padding: 80px 5%; }
+    .section-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--green-mid);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+    h2 {
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      font-weight: 800;
+      color: var(--text-primary);
+      letter-spacing: -0.8px;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+    .section-lead {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      max-width: 600px;
+      line-height: 1.7;
+    }
+    .centered { text-align: center; margin: 0 auto; }
+
+    /* ── PAIN SECTION ── */
+    .pain { background: var(--cream); }
+    .pain-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+      margin-top: 3rem;
+    }
+    .pain-points { list-style: none; display: flex; flex-direction: column; gap: 1rem; }
+    .pain-points li {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem 1.2rem;
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+    }
+    .pain-icon { font-size: 1.2rem; flex-shrink: 0; }
+    .pain-text { font-weight: 500; line-height: 1.5; }
+    .pain-transition {
+      background: var(--green-dark);
+      color: var(--white);
+      border-radius: 14px;
+      padding: 2rem;
+      font-size: 1.05rem;
+      font-weight: 500;
+      line-height: 1.65;
+    }
+    .pain-transition strong { color: var(--green-accent); }
+
+    /* ── SOLUTION ── */
+    .solution { background: white; }
+    .solution-intro {
+      max-width: 680px;
+      margin-bottom: 3rem;
+    }
+    .usps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .usp-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.75rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .usp-card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0,80,30,0.08); }
+    .usp-icon {
+      width: 48px; height: 48px;
+      background: var(--green-glow);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+    }
+    .usp-card h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+    }
+    .usp-card p { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; }
+
+    /* ── FEATURES ── */
+    .features { background: var(--green-dark); }
+    .features h2 { color: white; }
+    .features .section-label { color: var(--green-accent); }
+    .features .section-lead { color: rgba(255,255,255,0.65); }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.25rem;
+      margin-top: 3rem;
+    }
+    .feature-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 14px;
+      padding: 1.5rem;
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      transition: background 0.2s;
+    }
+    .feature-card:hover { background: rgba(61,204,106,0.08); border-color: rgba(61,204,106,0.25); }
+    .feature-badge {
+      background: var(--green-glow);
+      border: 1px solid rgba(61,204,106,0.3);
+      border-radius: 8px;
+      padding: 0.5rem;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+    .feature-card h3 { font-size: 0.95rem; font-weight: 700; color: white; margin-bottom: 0.3rem; }
+    .feature-card p { font-size: 0.875rem; color: rgba(255,255,255,0.6); line-height: 1.55; }
+
+    /* ── SOCIAL PROOF ── */
+    .social { background: var(--card-bg); }
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin: 3rem 0;
+    }
+    .stat-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      text-align: center;
+    }
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: var(--green-primary);
+      letter-spacing: -1.5px;
+      display: block;
+    }
+    .stat-label { font-size: 0.88rem; color: var(--text-muted); font-weight: 500; margin-top: 0.25rem; }
+    .testimonials {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+    .testimonial-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      position: relative;
+    }
+    .testimonial-card::before {
+      content: '"';
+      font-size: 4rem;
+      color: var(--green-accent);
+      opacity: 0.3;
+      position: absolute;
+      top: 0.5rem;
+      left: 1.2rem;
+      line-height: 1;
+      font-weight: 900;
+    }
+    .testimonial-card p { font-size: 0.92rem; color: var(--text-secondary); line-height: 1.65; padding-top: 1rem; margin-bottom: 1rem; }
+    .testimonial-author { font-weight: 700; font-size: 0.85rem; color: var(--text-primary); }
+    .testimonial-role { font-size: 0.8rem; color: var(--text-muted); }
+
+    /* ── MID CTA ── */
+    .mid-cta {
+      background: linear-gradient(135deg, var(--green-primary), var(--green-dark));
+      text-align: center;
+      padding: 70px 5%;
+    }
+    .mid-cta h2 { color: white; margin-bottom: 1rem; }
+    .mid-cta p { color: rgba(255,255,255,0.75); margin-bottom: 2rem; font-size: 1.05rem; }
+    .mid-cta .offer-note { color: rgba(255,255,255,0.5); font-size: 0.85rem; margin-top: 0.75rem; }
+
+    /* ── HOW IT WORKS ── */
+    .how { background: white; }
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 3rem;
+      position: relative;
+    }
+    .steps::before {
+      content: '';
+      position: absolute;
+      top: 32px; left: calc(16.6% + 32px); right: calc(16.6% + 32px);
+      height: 2px;
+      background: linear-gradient(90deg, var(--green-accent), var(--green-mid));
+    }
+    .step-card { text-align: center; position: relative; }
+    .step-num {
+      width: 64px; height: 64px;
+      background: var(--green-dark);
+      color: var(--green-accent);
+      font-size: 1.3rem;
+      font-weight: 900;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1rem;
+      border: 3px solid var(--green-accent);
+      position: relative;
+      z-index: 1;
+    }
+    .step-card h3 { font-size: 1rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem; }
+    .step-card p { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; }
+    .steps-note {
+      text-align: center;
+      margin-top: 2rem;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+
+    /* ── COMPARISON ── */
+    .compare { background: var(--cream); }
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 2.5rem;
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+    }
+    .compare-table th {
+      padding: 1.2rem 1.5rem;
+      font-size: 0.95rem;
+      font-weight: 700;
+      text-align: left;
+      border-bottom: 2px solid var(--border);
+    }
+    .compare-table th:first-child { color: var(--text-primary); }
+    .compare-table th:nth-child(2) { background: var(--green-dark); color: var(--green-accent); text-align: center; }
+    .compare-table th:nth-child(3) { background: #f5f5f5; color: var(--text-muted); text-align: center; }
+    .compare-table td {
+      padding: 1rem 1.5rem;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-secondary);
+    }
+    .compare-table td:nth-child(2) { text-align: center; background: rgba(26,107,58,0.04); font-size: 1.1rem; }
+    .compare-table td:nth-child(3) { text-align: center; background: #fafafa; font-size: 1.1rem; }
+    .compare-table tr:last-child td { border-bottom: none; }
+    .compare-table tr:hover td { background: rgba(61,204,106,0.04); }
+    .compare-table tr:hover td:nth-child(2) { background: rgba(61,204,106,0.08); }
+    .compare-note {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-top: 1rem;
+      font-style: italic;
+    }
+
+    /* ── FAQ ── */
+    .faq { background: white; }
+    .faq-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+      margin-top: 2.5rem;
+    }
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.5rem;
+    }
+    .faq-item h3 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.6rem;
+      padding-bottom: 0.6rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .faq-item p { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.65; }
+
+    /* ── TRUST BAR ── */
+    .trust-section {
+      background: var(--green-dark);
+      padding: 40px 5%;
+    }
+    .trust-badges {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .trust-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 10px;
+      padding: 0.65rem 1.25rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.85);
+    }
+    .trust-badge .icon { font-size: 1rem; }
+
+    /* ── FINAL CTA ── */
+    .final-cta {
+      background: var(--cream);
+      text-align: center;
+      padding: 100px 5%;
+    }
+    .final-cta h2 { font-size: clamp(1.8rem, 4vw, 2.8rem); letter-spacing: -1px; max-width: 600px; margin: 0 auto 1rem; }
+    .final-cta p { font-size: 1.05rem; color: var(--text-secondary); margin-bottom: 2rem; }
+    .final-cta .offer-note { color: var(--text-muted); font-size: 0.85rem; margin-top: 0.75rem; display: block; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--green-dark);
+      padding: 50px 5% 30px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+    .footer-brand p { color: rgba(255,255,255,0.5); font-size: 0.875rem; margin-top: 0.75rem; line-height: 1.65; max-width: 260px; }
+    .footer-col h4 { color: white; font-size: 0.85rem; font-weight: 700; margin-bottom: 1rem; letter-spacing: 0.5px; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+    .footer-col a { color: rgba(255,255,255,0.5); font-size: 0.85rem; text-decoration: none; transition: color 0.2s; }
+    .footer-col a:hover { color: var(--green-accent); }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-bottom p { color: rgba(255,255,255,0.35); font-size: 0.8rem; }
+
+    /* ── SCHEMA (hidden) ── */
+    script[type="application/ld+json"] { display: none; }
+
+    @media (max-width: 768px) {
+      .pain-grid, .usps, .stats-bar, .testimonials, .steps, .faq-grid, .footer-grid { grid-template-columns: 1fr; }
+      .steps::before { display: none; }
+      nav .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Piggy<span>Vest</span></div>
+  <ul class="nav-links">
+    <li><a href="#">Save</a></li>
+    <li><a href="#">Invest</a></li>
+    <li><a href="#">Stories</a></li>
+    <li><a href="#">FAQs</a></li>
+  </ul>
+  <a href="#" class="nav-cta">Create Free Account</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">🇳🇬 Nigeria's #1 Savings App · 6 Million+ Users</div>
+  <h1>The <em>Online Savings App</em> Nigerians Actually Stick To</h1>
+  <p class="hero-sub">Stop watching your money disappear. Start growing it automatically — in naira and dollars.</p>
+
+  <blockquote class="aeo-block">
+    PiggyVest is a Nigerian online savings and investment platform that helps over 6 million people build savings discipline, grow their money in naira and dollars, and reach financial goals — all from their phone, without stepping inside a bank.
+  </blockquote>
+
+  <div class="hero-ctas">
+    <a href="#" class="btn-primary">Create Free Account</a>
+    <a href="#" class="btn-secondary">See How It Works</a>
+  </div>
+
+  <div class="trust-bar">
+    <span class="trust-item"><span class="dot"></span>4.8★ App Store rating</span>
+    <span class="trust-item"><span class="dot"></span>6 million+ active users</span>
+    <span class="trust-item"><span class="dot"></span>256-bit SSL secured</span>
+    <span class="trust-item"><span class="dot"></span>CBN regulated</span>
+  </div>
+</section>
+
+<!-- PAIN -->
+<section class="pain">
+  <div class="section-label">The Reality</div>
+  <h2>You Work Hard. So Why Does Your Bank Balance Never Move?</h2>
+  <p class="section-lead">Most people in Nigeria don't have a saving problem. They have a staying-committed problem.</p>
+
+  <div class="pain-grid">
+    <ul class="pain-points">
+      <li>
+        <span class="pain-icon">💸</span>
+        <span class="pain-text">You transfer money to yourself "to save" and spend it before the week ends</span>
+      </li>
+      <li>
+        <span class="pain-icon">📉</span>
+        <span class="pain-text">Traditional bank savings accounts earn almost nothing in interest — while prices rise</span>
+      </li>
+      <li>
+        <span class="pain-icon">😤</span>
+        <span class="pain-text">It takes iron willpower to save consistently when life keeps happening</span>
+      </li>
+      <li>
+        <span class="pain-icon">📱</span>
+        <span class="pain-text">You download savings apps and stop using them after two weeks</span>
+      </li>
+    </ul>
+
+    <div class="pain-transition">
+      The issue is not discipline. The issue is that no one made it <strong>automatic, accountable, and actually rewarding</strong>. Your money needs a system that works even when you don't think about it.
+    </div>
+  </div>
+</section>
+
+<!-- SOLUTION -->
+<section class="solution">
+  <div class="section-label">The Solution</div>
+  <div class="solution-intro">
+    <h2>The Online Savings App Built for How Nigerians Actually Live</h2>
+    <p class="section-lead">PiggyVest combines automated savings, goal-setting tools, and real investment options — so your money moves before you can spend it, and grows while you're busy.</p>
+  </div>
+
+  <div class="usps">
+    <div class="usp-card">
+      <div class="usp-icon">🐷</div>
+      <h3>Save Automatically Without Thinking About It</h3>
+      <p>Piggybank deducts your chosen amount on a schedule — daily, weekly, or monthly. The money moves before you can spend it, and you earn interest on every naira set aside.</p>
+    </div>
+    <div class="usp-card">
+      <div class="usp-icon">🔒</div>
+      <h3>Lock Your Savings and Earn More</h3>
+      <p>Safelock lets you put money away for a fixed period at a higher interest rate. No accidental withdrawals — just a confirmed payout on the date you chose.</p>
+    </div>
+    <div class="usp-card">
+      <div class="usp-icon">💵</div>
+      <h3>Save in Dollars and Protect Your Purchasing Power</h3>
+      <p>With Flex Dollar, you can hold savings in USD directly from Nigeria. Your naira doesn't have to lose value while it sits. Dollar savings, accessible by everyone.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features">
+  <div class="section-label">What You Get</div>
+  <h2>Every Tool You Need to Build Real Financial Security</h2>
+  <p class="section-lead" style="color:rgba(255,255,255,0.6)">Seven savings products, one platform. Each one designed for a specific financial goal.</p>
+
+  <div class="features-grid">
+    <div class="feature-card">
+      <span class="feature-badge">🐷</span>
+      <div>
+        <h3>Piggybank — Automated Savings</h3>
+        <p>Money deducted automatically so you save without relying on willpower</p>
+      </div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-badge">🔒</span>
+      <div>
+        <h3>Safelock — Fixed Savings</h3>
+        <p>Locks your money at higher interest — maturity date means no early temptation</p>
+      </div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-badge">🎯</span>
+      <div>
+        <h3>Target Savings — Goal-Oriented</h3>
+        <p>Tie every naira to a purpose: rent, travel, school fees, emergency fund</p>
+      </div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-badge">💚</span>
+      <div>
+        <h3>Flex Naira — Flexible Savings</h3>
+        <p>Save and withdraw anytime with no penalty — full flexibility when life changes</p>
+      </div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-badge">💵</span>
+      <div>
+        <h3>Flex Dollar — Dollar Savings</h3>
+        <p>Protect your savings from naira inflation by holding and growing USD</p>
+      </div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-badge">🏠</span>
+      <div>
+        <h3>House Money — Semi-Strict Wallet</h3>
+        <p>Keep household funds separate with controlled access rules you define</p>
+      </div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-badge">📈</span>
+      <div>
+        <h3>Investment Products</h3>
+        <p>Put idle savings to work in vetted investment opportunities targeting higher returns</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL PROOF -->
+<section class="social">
+  <div class="section-label">Why They Trust Us</div>
+  <h2>Why 6 Million Nigerians Trust PiggyVest With Their Money</h2>
+
+  <div class="stats-bar">
+    <div class="stat-card">
+      <span class="stat-number">6M+</span>
+      <span class="stat-label">Active users across Nigeria</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-number">₦1T+</span>
+      <span class="stat-label">Saved and invested on the platform</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-number">4.8★</span>
+      <span class="stat-label">Rated on the App Store</span>
+    </div>
+  </div>
+
+  <div class="testimonials">
+    <div class="testimonial-card">
+      <p>I saved ₦300,000 in 3 months without feeling it. Piggybank just takes it on payday before I even log in. It changed everything for me.</p>
+      <div class="testimonial-author">Adaeze O.</div>
+      <div class="testimonial-role">Lagos</div>
+    </div>
+    <div class="testimonial-card">
+      <p>Safelock is the only thing that stopped me from dipping into my emergency fund. I locked it for 90 days and withdrew exactly when I needed it.</p>
+      <div class="testimonial-author">Tunde M.</div>
+      <div class="testimonial-role">Abuja</div>
+    </div>
+    <div class="testimonial-card">
+      <p>I started saving in dollars with Flex Dollar when the naira dropped. Best financial decision I made last year. The interface is incredibly simple.</p>
+      <div class="testimonial-author">Chioma A.</div>
+      <div class="testimonial-role">Port Harcourt</div>
+    </div>
+  </div>
+</section>
+
+<!-- MID CTA -->
+<section class="mid-cta">
+  <h2>Your Savings Goals Are Closer Than You Think</h2>
+  <p>PiggyVest is free to join and takes less than 3 minutes to set up. Over 6 million Nigerians are already growing their money — your turn starts now.</p>
+  <a href="#" class="btn-primary" style="display:inline-block;">Create Free Account</a>
+  <p class="offer-note">No monthly fees. No minimum balance. Cancel anytime.</p>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how">
+  <div class="section-label">Getting Started</div>
+  <h2 class="centered">Get Started in 3 Simple Steps</h2>
+
+  <div class="steps">
+    <div class="step-card">
+      <div class="step-num">1</div>
+      <h3>Create Your Free Account</h3>
+      <p>Sign up in under 3 minutes using your phone. No bank visit. No paperwork. Just your details and a quick verification.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">2</div>
+      <h3>Choose Your Savings Style</h3>
+      <p>Pick from Piggybank, Safelock, Target, Flex Naira, Flex Dollar or House Money — each designed for a different goal.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">3</div>
+      <h3>Watch Your Money Grow</h3>
+      <p>Set your schedule, fund your wallet, and earn interest automatically. Check in whenever you want — or don't.</p>
+    </div>
+  </div>
+  <p class="steps-note">Free to join · No hidden fees · Adjust or cancel anytime</p>
+</section>
+
+<!-- COMPARISON -->
+<section class="compare">
+  <div class="section-label">The Honest Comparison</div>
+  <h2>PiggyVest vs Saving With Your Regular Bank</h2>
+  <p class="section-lead">See exactly what you're leaving on the table with a traditional savings account.</p>
+
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th>Feature / Outcome</th>
+        <th>PiggyVest</th>
+        <th>Traditional Bank Savings</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Automated savings deductions</td>
+        <td>✅</td>
+        <td>❌</td>
+      </tr>
+      <tr>
+        <td>Higher interest rates</td>
+        <td>✅ Up to 13% p.a.</td>
+        <td>❌ 1–4% p.a. average</td>
+      </tr>
+      <tr>
+        <td>Multiple named savings goals</td>
+        <td>✅</td>
+        <td>❌ Single account</td>
+      </tr>
+      <tr>
+        <td>Dollar savings option</td>
+        <td>✅ Flex Dollar</td>
+        <td>❌ Requires complex FX account</td>
+      </tr>
+      <tr>
+        <td>Lock savings to prevent spending</td>
+        <td>✅ Safelock</td>
+        <td>❌ Not available</td>
+      </tr>
+      <tr>
+        <td>NDIC deposit insurance</td>
+        <td>⚠️ Not applicable</td>
+        <td>✅ Up to ₦5M per depositor</td>
+      </tr>
+      <tr>
+        <td>Mobile-first experience</td>
+        <td>✅ Built for smartphones</td>
+        <td>⚠️ Varies by bank</td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="compare-note">Note: Traditional bank savings have NDIC insurance coverage — an area where banks have a genuine advantage. PiggyVest is CBN-regulated with 256-bit encryption, but NDIC insurance does not apply.</p>
+</section>
+
+<!-- FAQ -->
+<section class="faq">
+  <div class="section-label">FAQ</div>
+  <h2>Frequently Asked Questions</h2>
+
+  <div class="faq-grid">
+    <div class="faq-item">
+      <h3>What is PiggyVest?</h3>
+      <p>PiggyVest is a Nigerian online savings and investment app used by over 6 million people. It lets you automate savings, lock funds for higher interest, set savings goals, and save in both naira and dollars — all from your phone.</p>
+    </div>
+    <div class="faq-item">
+      <h3>How does saving work on PiggyVest?</h3>
+      <p>You fund your PiggyVest wallet and choose a savings product. Piggybank deducts automatically on a schedule, Safelock locks your money for a fixed period, and Target lets you save toward a named goal. You earn interest on all savings.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Can I withdraw my money at any time?</h3>
+      <p>It depends on the product. Flex Naira and Flex Dollar allow withdrawals anytime. Piggybank has a quarterly withdrawal window. Safelock is locked until your chosen maturity date. Each product clearly shows its terms before you commit.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Is PiggyVest safe and regulated?</h3>
+      <p>Yes. PiggyVest is regulated by the Central Bank of Nigeria (CBN) and uses 256-bit SSL encryption — the same standard used by major banks. It has processed over ₦1 trillion in user funds since launch.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Does PiggyVest charge fees?</h3>
+      <p>Creating an account and saving are free. A small fee applies on early withdrawals from certain products. There are no monthly maintenance fees and no minimum balance requirement to open an account.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Who is PiggyVest for?</h3>
+      <p>PiggyVest is for any Nigerian who earns money and wants to keep more of it — salaried employees, freelancers, students, and business owners. If you find it hard to save consistently, PiggyVest is designed specifically for you.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST BADGES -->
+<section class="trust-section">
+  <div class="trust-badges">
+    <div class="trust-badge"><span class="icon">🆓</span> Free to join — no monthly fees</div>
+    <div class="trust-badge"><span class="icon">🔐</span> 256-bit SSL security</div>
+    <div class="trust-badge"><span class="icon">🏛️</span> CBN regulated</div>
+    <div class="trust-badge"><span class="icon">👥</span> 6 million+ users trust PiggyVest</div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta">
+  <h2>Start Growing Your Savings in the Next 3 Minutes</h2>
+  <p>Join over 6 million Nigerians who stopped watching their money disappear and started making it work.</p>
+  <a href="#" class="btn-primary" style="display:inline-block; background: var(--green-primary); color: white; box-shadow: 0 4px 20px rgba(26,107,58,0.3);">Create Free Account</a>
+  <span class="offer-note">Free forever · No minimum balance · Set up in minutes</span>
+  <br /><a href="#" style="color: var(--green-mid); font-size: 0.9rem; margin-top: 1rem; display: inline-block; text-decoration: none; font-weight: 600;">See How It Works →</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo">Piggy<span style="color: var(--green-accent);">Vest</span></div>
+      <p>The better way to save and invest online. Trusted by over 6 million Nigerians. CBN regulated. Bank-level security.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Save</h4>
+      <ul>
+        <li><a href="#">Piggybank</a></li>
+        <li><a href="#">Safelock</a></li>
+        <li><a href="#">Target Savings</a></li>
+        <li><a href="#">Flex Naira</a></li>
+        <li><a href="#">Flex Dollar</a></li>
+        <li><a href="#">House Money</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <ul>
+        <li><a href="#">Blog</a></li>
+        <li><a href="#">Calculator</a></li>
+        <li><a href="#">Newsletter</a></li>
+        <li><a href="#">Ebook</a></li>
+        <li><a href="#">Annual Reports</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Security</a></li>
+        <li><a href="#">FAQs</a></li>
+        <li><a href="#">Stories</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 PiggyVest. All rights reserved. Improved content by SEO-AEO Engine.</p>
+    <p>Regulated by the Central Bank of Nigeria (CBN)</p>
+  </div>
+</footer>
+
+<!-- JSON-LD SCHEMA -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is PiggyVest?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "PiggyVest is a Nigerian online savings and investment app used by over 6 million people. It lets you automate savings, lock funds for higher interest, set savings goals, and save in both naira and dollars — all from your phone."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How does saving work on PiggyVest?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You fund your PiggyVest wallet and choose a savings product. Piggybank deducts automatically on a schedule, Safelock locks your money for a fixed period, and Target lets you save toward a named goal. You earn interest on all savings."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I withdraw my money at any time from PiggyVest?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It depends on the product. Flex Naira and Flex Dollar allow withdrawals anytime. Piggybank has a quarterly withdrawal window. Safelock is locked until your chosen maturity date."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is PiggyVest safe and regulated?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. PiggyVest is regulated by the Central Bank of Nigeria and uses 256-bit SSL encryption. It has processed over ₦1 trillion in user funds since launch."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does PiggyVest charge fees?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Creating an account and saving are free. There is a small fee on early withdrawals from certain products. There are no monthly maintenance fees and no minimum balance requirement."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Who is PiggyVest for?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "PiggyVest is for any Nigerian who earns money and wants to keep more of it — salaried employees, freelancers, students, and business owners who find it hard to save consistently."
+      }
+    }
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FinancialProduct",
+  "name": "PiggyVest",
+  "description": "PiggyVest is a Nigerian online savings and investment platform that helps over 6 million people automate savings, lock funds for higher interest, save in naira and dollars, and reach financial goals from their phone.",
+  "url": "https://www.piggyvest.com",
+  "provider": {
+    "@type": "Organization",
+    "name": "PiggyVest",
+    "url": "https://www.piggyvest.com"
+  },
+  "areaServed": {
+    "@type": "Country",
+    "name": "Nigeria"
+  },
+  "feesAndCommissionsSpecification": "Free to join. Small early withdrawal fee on certain products. No monthly maintenance fees.",
+  "offers": {
+    "@type": "Offer",
+    "availability": "https://schema.org/InStock",
+    "price": "0",
+    "priceCurrency": "NGN",
+    "description": "Free account creation. No minimum balance."
+  }
+}
+</script>
+
+</body>
+</html>

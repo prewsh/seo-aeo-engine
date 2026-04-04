@@ -1,0 +1,43 @@
+{
+  "name": "seo-aeo-engine",
+  "version": "1.0.0",
+  "description": "An open-source AI-powered SEO + AEO content engine. Installs 8 specialist skills and an orchestrator workflow for Antigravity, Claude Code, Gemini CLI, Codex CLI, Cursor, and more.",
+  "bin": {
+    "seo-aeo-engine": "./tools/install.js"
+  },
+  "scripts": {
+    "install-skills": "node tools/install.js"
+  },
+  "keywords": [
+    "seo",
+    "aeo",
+    "content",
+    "antigravity",
+    "skills",
+    "claude-code",
+    "gemini-cli",
+    "codex",
+    "cursor",
+    "answer-engine-optimization",
+    "content-engine",
+    "ai-agent",
+    "skill"
+  ],
+  "author": "mrprewsh",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mrprewsh/seo-aeo-engine.git"
+  },
+  "homepage": "https://github.com/mrprewsh/seo-aeo-engine#readme",
+  "files": [
+    ".agent/skills",
+    ".agent/workflows",
+    "tools/install.js",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}

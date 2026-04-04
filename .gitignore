@@ -1,0 +1,25 @@
+# npm cache
+.npm-cache/
+node_modules/
+
+# Python
+__pycache__/
+*.pyc
+.env
+venv/
+.venv/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build artifacts
+dist/
+build/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Any accidentally cloned external repos
+antigravity-awesome-skills/
