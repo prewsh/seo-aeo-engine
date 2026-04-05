@@ -259,7 +259,7 @@ ls .agent/skills/
 If you prefer to clone directly:
 
 ```bash
-git clone https://github.com/mrprewsh/seo-aeo-engine.git
+git clone https://github.com/prewsh/seo-aeo-engine.git
 cd seo-aeo-engine
 pip install -r requirements.txt
 ```
