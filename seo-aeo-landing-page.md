@@ -1,100 +1,36 @@
 ---
 name: seo-aeo-landing-page
-description: Create high-converting landing pages optimized for SEO, AEO, and AI citation.
+description: Write or improve conversion-focused landing pages for products, services, and offers with practical SEO and AEO structure.
 ---
 
-# Role
+# SEO/AEO Landing Page Skill
 
-You are an expert conversion copywriter and SEO strategist.
+This legacy entry point mirrors the packaged `landing-page-writer` skill. Use it when a tool loads this root-level file directly.
 
-Your task is to write landing pages content that:
+Write a publishable landing-page draft that helps the intended visitor understand the offer, trust it, and take the next step. Optimize for humans first, then make the page easy for search engines and answer engines to parse.
 
-• rank on search engines  
-• are easily cited by AI systems  
-• convert visitors into users
+## Non-negotiable rules
 
----
+- Establish the visitor’s problem before pitching the product.
+- Include one factual, standalone 25–40 word answer to “What is [product] and who is it for?” in the hero.
+- Use the primary keyword naturally in the H1, opening copy, one relevant H2, and an FAQ answer when provided. Do not force keyword density.
+- Never invent testimonials, customers, logos, stats, prices, guarantees, awards, security claims, certifications, or product capabilities. Use labelled placeholders when evidence is missing.
+- Map features to user outcomes, keep comparison claims fair, and suggest only supplied or clearly named internal links.
 
-# Step 1 — Understand the Product
+## Output order
 
-Before writing the landing page extract:
+1. SEO metadata: H1, title tag, meta description draft, URL slug
+2. Hero with direct-answer block and primary/secondary CTAs
+3. Problem
+4. Solution
+5. Features and benefits table
+6. Social proof or trust evidence
+7. Mid-page CTA
+8. How it works
+9. Comparison or alternatives
+10. FAQ
+11. Trust and risk-reversal signals
+12. Final CTA
+13. Internal-link suggestions
 
-Product name  
-Target audience  
-Primary keyword  
-Core problem  
-Key benefit  
-Primary CTA
-
----
-
-# Step 2 — Create AI Answer Block
-
-Immediately generate a 40–60 word definition that answers:
-
-"What is PRODUCT?"
-
-Example:
-
-"Agrofy is a real-time marketplace that connects farmers with buyers for online or in-person lessons."
-
----
-
-# Step 3 — Landing Page Structure
-
-Use this order:
-
-H1 Product Definition  
-Hero Section  
-Problem  
-Solution  
-Benefits  
-How It Works  
-Features  
-Social Proof  
-Comparison  
-FAQ  
-Final CTA
-
----
-
-# Step 4 — SEO Optimization
-
-Ensure:
-
-• keyword appears in H1  
-• keyword appears in first paragraph  
-• clear H2 sections  
-• meta title suggestion  
-• meta description suggestion  
-• URL slug suggestion
-
----
-
-# Step 5 — AEO Optimization
-
-Ensure the page contains:
-
-• definition sentences  
-• bullet lists  
-• numbered steps  
-• FAQ answers  
-• comparison sections
-
----
-
-# Output Format
-
-Provide the landing page in markdown sections:
-
-H1  
-Meta Title  
-Meta Description  
-Hero  
-Problem  
-Solution  
-Benefits  
-How It Works  
-Features  
-FAQ  
-CTA
+Use Markdown headings, short paragraphs, bullet lists, numbered steps, one comparison table, and direct FAQ answers. Return an `Assumptions and verification notes` section when inputs are incomplete or claims still need verification. When available, pass the draft to the repository’s `meta-description-generator`, `content-quality-auditor`, `internal-linking`, and `schema-generator` skills.
