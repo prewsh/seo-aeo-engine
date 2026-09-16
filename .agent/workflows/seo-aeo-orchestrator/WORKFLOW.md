@@ -1,434 +1,263 @@
-# SEO-AEO Orchestrator Workflow
+# SEO-AEO Growth Orchestrator Workflow
 
 **File:** `.agent/workflows/seo-aeo-orchestrator/WORKFLOW.md`
 **Workflow ID:** `seo-aeo-orchestrator`
-**Version:** 1.0.0
-**Total Steps:** 8
-**Execution Mode:** Parallel where specified, sequential otherwise
-
----
+**Version:** 2.0.0
+**Execution Mode:** sequential gates with parallel content work where safe
 
 ## Purpose
 
-This workflow generates a complete, publish-ready content growth system from a single keyword or topic. It runs 8 specialised skills in a structured sequence, passing outputs between them so every piece of content is informed by the one before it.
+Turn a website or codebase into an evidence-backed SEO/AEO growth system. The workflow starts with an audit, implements approved fixes, confirms the business and keyword strategy, researches current search intent, creates foundational content, prepares external distribution, configures measurement, deploys, verifies, and offers weekly monitoring.
 
-The end state is not a single article. It is an entire content ecosystem — landing page, blog post, meta tags, topic cluster, audit report, internal link map, and schema markup — all aligned to the same keyword strategy and AEO standards.
+The workflow is designed for coding agents working directly in a repository. It must understand the project’s framework, routes, content storage, metadata implementation, sitemap/robots generation, deployment path, and authentication boundaries before editing or publishing.
 
----
-
-## Workflow Entry Point
+## Workflow entry point
 
 ```json
 {
   "workflow_input": {
-    "topic": "string — the primary subject or keyword to build the content system around",
-    "business_type": "string — what the business does",
-    "target_audience": "string — who the content is for",
-    "content_goal": "rank | convert | educate | all",
-    "brand_name": "string — optional",
-    "brand_url": "string — optional, homepage URL",
-    "existing_content": ["string — optional, titles of pages already published"],
+    "project_path": "string — current project or repository",
+    "site_url": "string — optional live URL",
+    "business_type": "string — optional description of the business",
+    "target_audience": "string — optional audience",
+    "conversion_goal": "string — signup, demo, purchase, download, contact, or other",
+    "user_keywords": ["string — optional owner-approved targets"],
+    "location": "string — optional market or country",
+    "foundation_page_count": "integer — 5–10, default 10",
+    "research_mode": "browser | api | both | unavailable — default both",
+    "existing_content": ["string — optional URLs, routes, or titles"],
     "tone": "professional | conversational | bold | empathetic | authoritative",
-    "location": "string — optional, for local SEO targeting"
+    "monitoring_preference": "ask | one-time | recurring | none — default ask"
   }
 }
 ```
 
----
+## Authorization gates
 
-## Execution Architecture
+The agent may inspect the codebase, run local checks, and draft recommendations without additional confirmation. Before each external or material mutation, obtain the required authorization:
+
+- implementing code/content changes: follow the user’s request and preserve unrelated work;
+- deploying or pushing to Git: confirm when the user has not already requested it;
+- accessing Google Search Console or Bing Webmaster: ask the user to authenticate in the browser or provide an approved connector;
+- submitting URLs or sitemaps: confirm the exact property and URLs before submission;
+- creating recurring monitoring: ask whether the user wants it, even if `monitoring_preference` is `ask`.
+
+Never claim an account is connected, a sitemap is submitted, a URL is indexed, or a deployment is live without observable evidence.
+
+## Execution architecture
 
 ```
-PHASE 1 — RESEARCH
-────────────────────────────────────────────────
-Step 1: keyword-research
-  Input: workflow_input
-  Output: keyword_report
-  (feeds both Phase 2 tracks)
-
-────────────────────────────────────────────────
-PHASE 2 — GENERATION (runs in parallel)
-────────────────────────────────────────────────
-
-TRACK A                        TRACK B
-──────────────                 ────────────────────
-Step 2:                        Step 4:
-landing-page-writer            content-cluster
-Input: keyword_report          Input: keyword_report
-Output: landing_page           Output: cluster_map
-        │                               │
-        ▼                               ▼
-Step 3:                        Step 5:
-meta-description-generator     blog-writer
-Input: landing_page +          Input: cluster_map +
-       keyword_report                  keyword_report
-Output: meta_tags              Output: blog_post
-
-────────────────────────────────────────────────
-PHASE 3 — AUDIT, LINK, STRUCTURE (sequential)
-────────────────────────────────────────────────
-Step 6: content-quality-auditor
-  Input: landing_page + blog_post + keyword_report
-  Output: audit_report
-
-Step 7: internal-linking
-  Input: landing_page + blog_post + cluster_map + audit_report
-  Output: link_map
-
-Step 8: schema-generator
-  Input: landing_page + blog_post + meta_tags + link_map + keyword_report
-  Output: schema_markup
+PHASE 0 — DISCOVERY
+  inspect codebase, framework, routes, live URL, deployment, and content model
+        │
+        ▼
+PHASE 1 — AUDIT
+  SEO/AEO/technical/conversion audit with evidence and prioritized fixes
+        │
+        ▼
+PHASE 2 — IMPLEMENTATION
+  apply approved audit fixes, then re-audit and verify build/routes
+        │
+        ▼
+PHASE 3 — STRATEGY CONFIRMATION
+  ask for business context, target keywords, audience, location, and conversion goal
+        │
+        ▼
+PHASE 4 — SEARCH-INTENT RESEARCH
+  browser + API research when available; semantic fallback when unavailable
+        │
+        ▼
+PHASE 5 — CONTENT FOUNDATION
+  landing/product improvements + 5–10 foundational pages, default 10 when justified
+        │
+        ├───────────────┐
+        ▼               ▼
+  internal content   external distribution plan
+        │               │
+        └───────┬───────┘
+                ▼
+PHASE 6 — MEASUREMENT AND PUBLISHING
+  Search Console/Bing setup (gated), sitemap/URL submission, deploy, verify
+                │
+                ▼
+PHASE 7 — MONITORING
+  weekly analysis, refresh recommendations, optional recurring automation
 ```
 
----
+## Phase 0 — Discover the project
 
-## Phase 1 — Research
+1. Inspect the repository without overwriting user work.
+2. Identify framework, package manager, routes, page components, content files/CMS, metadata helpers, sitemap and robots generation, schema implementation, internal-link patterns, environment configuration, and deployment commands.
+3. Identify whether a blog already exists. If not, determine the project’s native way to add pages and preserve its conventions.
+4. Inspect the live URL when supplied and record what was actually checked.
+5. Produce a short project map before making content recommendations.
 
-### Step 1 — Keyword Research
+**Output:** `project-discovery.md` with framework, routes, content model, deployment path, measurement status, and access limitations.
 
-| Field | Value |
-|-------|-------|
-| Skill | `keyword-research` |
-| Phase | 1 — Research |
-| Execution | Sequential — must complete before Phase 2 starts |
-| Input From | `workflow_input` |
-| Output To | Step 2 (Track A) and Step 4 (Track B) simultaneously |
+## Phase 1 — Run the SEO/AEO audit
 
-**What this step does:**
+Use `content-quality-auditor` with `input_type: codebase`, `website`, or both. Inspect:
 
-Analyses the `topic` and `business_type` from the workflow input and produces a full keyword strategy. This is the foundation everything else builds on. No content is generated until this step completes.
+- crawlability, indexability, robots.txt, sitemap, canonical URLs, redirects, status codes, and duplicate routes;
+- title tags, meta descriptions, Open Graph/Twitter metadata, headings, URLs, image alt text, and structured data;
+- page purpose, search intent, topical coverage, thin/duplicate content, cannibalization, orphan pages, and internal links;
+- direct-answer blocks, definitions, steps, FAQs, comparison content, visible evidence, and AEO extractability;
+- conversion paths from foundational content to product, signup, pricing, demo, download, or contact pages;
+- performance/accessibility symptoms that affect search or conversion.
 
-**Output object — `keyword_report`:**
-```json
-{
-  "primary_keyword": "string",
-  "secondary_keywords": ["string"],
-  "aeo_keywords": ["string"],
-  "lsi_terms": ["string"],
-  "tier_1_keywords": ["string"],
-  "tier_2_keywords": ["string"],
-  "content_map": [
-    {
-      "title": "string",
-      "keyword": "string",
-      "content_type": "string",
-      "priority": "integer"
-    }
-  ],
-  "keywords_to_avoid": ["string"]
-}
-```
+Every finding must include severity, evidence, impact, exact fix, verification method, and dependencies.
 
-**Completion check before moving to Phase 2:**
-- [ ] `primary_keyword` is defined
-- [ ] At least 3 `secondary_keywords` present
-- [ ] At least 4 `aeo_keywords` present
-- [ ] `content_map` contains at least 5 entries
-- [ ] `tier_1_keywords` contains at least 2 entries
+**Output:** `audit-report.md` and `audit-fix-plan.md`.
 
-If any check fails, halt the workflow and return an error asking the user to provide a more specific topic.
+## Phase 2 — Implement and verify audit fixes
 
----
+1. Apply blocker and high-priority fixes first.
+2. Fix technical foundations before producing new content: metadata, canonical behavior, sitemap, robots, routes, broken links, schema, and internal navigation.
+3. Fix landing-page content and conversion paths identified by the audit.
+4. Re-run the audit and compare before/after findings.
+5. Run the project’s build, test, lint, route, and link checks where available.
 
-## Phase 2 — Generation (Parallel Tracks)
+Do not start the foundation content phase while critical indexability or deployment blockers remain unresolved unless the user explicitly accepts the risk.
 
-Phase 2 runs Track A and Track B simultaneously. Neither track waits for the other. Both receive their input from `keyword_report` produced in Step 1.
+**Output:** updated code/content plus `audit-verification.md`.
 
----
+## Phase 3 — Confirm strategy with the owner
 
-### Track A
+Ask concise questions if the answers are not already known:
 
-#### Step 2 — Landing Page Writer
+1. What does the business/product do, and who should convert?
+2. Which keywords or topics does the owner want to rank for?
+3. What market, location, conversion goal, and product pages should content support?
 
-| Field | Value |
-|-------|-------|
-| Skill | `landing-page-writer` |
-| Phase | 2 — Generation, Track A |
-| Execution | Parallel with Track B |
-| Input From | `keyword_report` (Step 1) |
-| Output To | Step 3 (meta-description-generator) |
+If the owner does not know target keywords, continue with provisional candidates derived from the audit and site, but label them clearly and request confirmation before treating them as final.
 
-**Output object — `landing_page`:**
-```json
-{
-  "h1": "string",
-  "aeo_extraction_sentence": "string",
-  "full_page_content": "string — complete markdown output",
-  "primary_keyword_used": "string",
-  "faq_count": "integer",
-  "internal_link_placeholders": ["string"],
-  "word_count": "integer"
-}
-```
+## Phase 4 — Research search intent
 
----
+Use `keyword-research` with `research_mode: both` by default:
 
-#### Step 3 — Meta Description Generator
+- use browser research to inspect current Google/Bing result pages, related searches, snippets, People Also Ask-style questions, ranking formats, and wording;
+- use available search or keyword APIs for repeatable query, volume, trend, or competitor data;
+- reconcile disagreements and record the source, date, market/device, and confidence;
+- if only one source is available, say which one;
+- if neither is available, use semantic analysis only and mark live metrics unverified.
 
-| Field | Value |
-|-------|-------|
-| Skill | `meta-description-generator` |
-| Phase | 2 — Generation, Track A |
-| Execution | Sequential within Track A — waits for Step 2 |
-| Input From | `landing_page` (Step 2) + `keyword_report` (Step 1) |
-| Output To | Step 6 (content-quality-auditor) + Step 8 (schema-generator) |
+Prioritize problem-related queries that the product can genuinely solve. Search intent outranks attractive but irrelevant volume.
 
-**Output object — `meta_tags`:**
-```json
-{
-  "title_variants": ["string", "string", "string"],
-  "description_variants": ["string", "string", "string"],
-  "recommended_title": "string",
-  "recommended_description": "string",
-  "og_title": "string",
-  "og_description": "string",
-  "twitter_title": "string",
-  "twitter_description": "string"
-}
-```
+**Output:** `keyword-research-report.md` containing owner keywords, provisional candidates, search-intent evidence, cannibalization risks, keywords to avoid, and a content map.
 
----
+## Phase 5 — Create the content foundation
 
-### Track B
+Use `content-cluster` to create between 5 and 10 foundational pages, defaulting to 10 only when there are 10 distinct defensible intents. If fewer than 5 distinct intents exist, explain the limitation instead of inventing topics.
 
-#### Step 4 — Content Cluster
+Each foundational page must have:
 
-| Field | Value |
-|-------|-------|
-| Skill | `content-cluster` |
-| Phase | 2 — Generation, Track B |
-| Execution | Parallel with Track A |
-| Input From | `keyword_report` (Step 1) |
-| Output To | Step 5 (blog-writer) |
+- one primary query and one dominant intent;
+- a specific problem it solves;
+- a search-intent-led H1;
+- a factual answer/extraction block;
+- useful body content, lists or steps where appropriate, and FAQs when warranted;
+- internal links to related foundational pages and a relevant product conversion path;
+- metadata, canonical URL, schema decision, and publishing route;
+- an external distribution candidate when republishing is appropriate.
 
-**Output object — `cluster_map`:**
-```json
-{
-  "pillar_page": {
-    "title": "string",
-    "keyword": "string",
-    "word_count_target": "integer"
-  },
-  "cluster_articles": [
-    {
-      "priority": "integer — 1, 2, or 3",
-      "title": "string",
-      "keyword": "string",
-      "content_type": "string",
-      "intent": "string",
-      "links_to": ["string"]
-    }
-  ],
-  "link_map": "string — text-based link tree",
-  "aeo_priority_articles": ["string"]
-}
-```
+Use `blog-writer` to write the approved pages. Content should convert without unsupported claims, and every article should include a visible answer block plus a relevant product CTA when the intent supports it.
 
----
+Create a separate 20-day editorial calendar after the foundation is mapped. It should contain distinct topics, target queries, intent, format, internal-link targets, product CTA, and suggested external distribution platform.
 
-#### Step 5 — Blog Writer
+**Outputs:** `foundational-content-plan.md`, foundational page files in the project’s native content location, `20-day-editorial-calendar.md`, and `external-distribution-plan.md`.
 
-| Field | Value |
-|-------|-------|
-| Skill | `blog-writer` |
-| Phase | 2 — Generation, Track B |
-| Execution | Sequential within Track B — waits for Step 4 |
-| Input From | `cluster_map` (Step 4) + `keyword_report` (Step 1) |
-| Output To | Step 6 (content-quality-auditor) |
+## Phase 6 — Measurement, publishing, and deployment
 
-**Output object — `blog_post`:**
-```json
-{
-  "title": "string",
-  "keyword": "string",
-  "full_post_content": "string — complete markdown output",
-  "tldr_block": "string",
-  "faq_count": "integer",
-  "word_count": "integer",
-  "internal_link_placeholders": ["string"]
-}
-```
+1. Detect and validate sitemap and robots output locally.
+2. Ask whether the user wants Google Search Console and Bing Webmaster setup now.
+3. If yes, ask the user to authenticate in the browser or use an approved connector. Do not request or store passwords.
+4. Verify the correct property, submit the sitemap, and submit important URLs only after showing the exact targets.
+5. Build and deploy using the project’s established process when authorized.
+6. Verify production routes, canonical tags, metadata, sitemap, robots, schema, internal links, and conversion CTAs.
+7. Report what was completed, what was only prepared, and what is waiting for indexing or external confirmation.
 
----
+Internal pages should be published on the website. External articles should be adapted for the selected platform, use canonical links where supported, and link naturally to the relevant internal article and product page. Do not mass-publish duplicated content or promise backlink outcomes.
 
-## Phase 3 — Audit, Link, Structure (Sequential)
+## Phase 7 — Monitor and refresh
 
-Phase 3 begins only after both Track A and Track B have fully completed.
+After publishing, offer the user these choices:
 
----
+- one-time monitoring analysis;
+- weekly recurring monitoring;
+- no monitoring setup yet.
 
-### Step 6 — Content Quality Auditor
+Ask explicitly before creating a recurring automation. If accepted, create a quiet monitor that reports only meaningful changes, completion, failures, or required user action. A recurring run should review Search Console/Bing data when connected: impressions, clicks, CTR, query changes, indexed pages, ranking movement, pages with rising impressions but low CTR, pages with clicks but weak conversion paths, emerging queries, cannibalization, and content needing refresh.
 
-| Field | Value |
-|-------|-------|
-| Skill | `content-quality-auditor` |
-| Phase | 3 — Audit, Link, Structure |
-| Execution | Sequential — waits for Steps 3 and 5 to complete |
-| Input From | `landing_page` (Step 2) + `blog_post` (Step 5) + `keyword_report` (Step 1) |
-| Output To | Step 7 (internal-linking) |
+**Output:** `weekly-seo-monitoring-report.md` with observed metrics, changes since the last period, interpretation, recommended actions, and unresolved access limitations.
 
-**Output object — `audit_report`:**
-```json
-{
-  "landing_page_audit": {
-    "overall_score": "integer",
-    "seo_score": "integer",
-    "aeo_score": "integer",
-    "readability_score": "integer",
-    "critical_issues": ["string"],
-    "warnings": ["string"],
-    "projected_score_after_fixes": "integer"
-  },
-  "blog_post_audit": {
-    "overall_score": "integer",
-    "seo_score": "integer",
-    "aeo_score": "integer",
-    "readability_score": "integer",
-    "critical_issues": ["string"],
-    "warnings": ["string"],
-    "projected_score_after_fixes": "integer"
-  },
-  "publish_recommendation": "ready | fix-first | do-not-publish"
-}
-```
-
-**Publish Gate:** If `publish_recommendation` is `do-not-publish`, halt the workflow and return the audit report with fix instructions. If `fix-first`, continue but flag all issues in the final output.
-
----
-
-### Step 7 — Internal Linking
-
-| Field | Value |
-|-------|-------|
-| Skill | `internal-linking` |
-| Phase | 3 — Audit, Link, Structure |
-| Execution | Sequential — waits for Step 6 |
-| Input From | `landing_page` (Step 2) + `blog_post` (Step 5) + `cluster_map` (Step 4) + `audit_report` (Step 6) |
-| Output To | Step 8 (schema-generator) |
-
-**Output object — `link_map`:**
-```json
-{
-  "total_opportunities": "integer",
-  "orphan_pages": ["string"],
-  "high_priority_links": [
-    {
-      "link_type": "string",
-      "source_page": "string",
-      "target_page": "string",
-      "anchor_text": "string",
-      "context_sentence": "string"
-    }
-  ],
-  "medium_priority_links": ["object"],
-  "low_priority_links": ["object"],
-  "cannibalization_risks": ["string"],
-  "equity_map": "string — text-based link flow"
-}
-```
-
----
-
-### Step 8 — Schema Generator
-
-| Field | Value |
-|-------|-------|
-| Skill | `schema-generator` |
-| Phase | 3 — Audit, Link, Structure |
-| Execution | Sequential — waits for Step 7 |
-| Input From | `landing_page` (Step 2) + `blog_post` (Step 5) + `meta_tags` (Step 3) + `link_map` (Step 7) + `keyword_report` (Step 1) |
-| Output To | `final_output` |
-
-**Output object — `schema_markup`:**
-```json
-{
-  "landing_page_schema": {
-    "types_generated": ["string"],
-    "rich_results_unlocked": ["string"],
-    "validation_passed": "boolean",
-    "script_blocks": ["string"]
-  },
-  "blog_post_schema": {
-    "types_generated": ["string"],
-    "rich_results_unlocked": ["string"],
-    "validation_passed": "boolean",
-    "script_blocks": ["string"]
-  }
-}
-```
-
----
-
-## Final Output
+## Final deliverables
 
 ```
 outputs/
-├── keyword-research-report.md
-├── landing-page.md
-├── meta-tags.md
-├── content-cluster.md
-├── blog-post.md
+├── project-discovery.md
 ├── audit-report.md
+├── audit-fix-plan.md
+├── audit-verification.md
+├── keyword-research-report.md
+├── foundational-content-plan.md
+├── 20-day-editorial-calendar.md
+├── external-distribution-plan.md
+├── landing-page.md
 ├── internal-link-map.md
-└── schema-markup.md
+├── schema-markup.md
+├── publishing-verification.md
+└── weekly-seo-monitoring-report.md  # when monitoring runs
 ```
 
----
+## Completion gates
 
-## Workflow Health Checklist
+### Before content production
 
-### Phase 1
-- [ ] Primary keyword is defined and specific
-- [ ] At least 4 AEO keywords generated
-- [ ] Content map contains at least 5 entries
+- [ ] Project structure and publishing path understood
+- [ ] Critical technical audit blockers addressed or explicitly accepted
+- [ ] Business, audience, conversion goal, and market recorded
+- [ ] Owner keywords confirmed or provisional keywords clearly labelled
+- [ ] Search-intent evidence recorded with sources and dates
 
-### Phase 2 — Track A
-- [ ] Landing page H1 contains primary keyword
-- [ ] Landing page AEO extraction sentence present
-- [ ] Landing page FAQ section has minimum 6 entries
-- [ ] Meta description recommended variant is 140–155 characters
-- [ ] Title tag recommended variant is 50–60 characters
+### Before deployment
 
-### Phase 2 — Track B
-- [ ] Content cluster has minimum 6 articles
-- [ ] Every cluster article has a unique keyword
-- [ ] At least one FAQ page in the cluster
-- [ ] Blog post contains TL;DR block
-- [ ] Blog post contains exactly 5 FAQ entries
-- [ ] Blog post word count is between 800–3000
+- [ ] 5–10 foundational pages planned, default 10 only when justified
+- [ ] No foundational pages cannibalize each other
+- [ ] Every page has a problem, intent, answer block, internal links, and relevant CTA
+- [ ] Metadata, canonical URLs, sitemap, robots, schema, and routes verified
+- [ ] Build/tests/lint pass where available
+- [ ] External distribution plan does not duplicate content recklessly
 
-### Phase 3
-- [ ] Both landing page and blog post audited
-- [ ] No content scored below 50/100 overall
-- [ ] No orphan pages in link map
-- [ ] Every cluster article has a Cluster → Pillar link defined
-- [ ] FAQPage schema generated for both landing page and blog post
-- [ ] All schema validated — no missing required fields
+### After deployment
 
----
+- [ ] Production URLs checked
+- [ ] Search Console/Bing setup status recorded honestly
+- [ ] Important URLs and sitemap submitted only with authorization
+- [ ] Monitoring preference asked explicitly
+- [ ] Recurring automation created only after user approval
 
-## Error Handling
+## Error handling
 
-| Error Condition | Workflow Behaviour |
-|-----------------|-------------------|
-| Step 1 produces no primary keyword | Halt — ask user to provide a more specific topic |
-| Step 2 or 5 produce under 300 words | Flag as warning — continue but note in audit |
-| Step 6 scores any content below 50/100 | Halt — return audit report with fix instructions |
-| Step 7 detects orphan pages | Continue — flag in link map and final output |
-| Step 8 schema fails validation | Continue — flag missing fields in schema output |
-| Any script unavailable | Continue manually — note "Script verification skipped" |
+| Condition | Behaviour |
+|-----------|-----------|
+| No codebase or URL | Ask for a project path or live URL before a technical audit |
+| No target keywords | Produce provisional candidates and ask for confirmation |
+| No browser/API research | Continue semantically and label live metrics unverified |
+| Critical indexability blocker | Halt content publishing; return fix plan |
+| Fewer than 5 defensible foundation topics | Explain the constraint; do not invent topics |
+| Missing external credentials | Prepare exact steps and wait for user authentication |
+| Deployment or build failure | Do not claim publish success; return logs and next fix |
+| User declines monitoring | Finish without creating recurring automation |
+| Script unavailable | Continue manually and record the skipped verification |
 
----
+## Connected skills
 
-## Connected Skills
-
-| Step | Skill | Receives From | Sends To |
-|------|-------|---------------|----------|
-| 1 | `keyword-research` | `workflow_input` | Steps 2, 4 |
-| 2 | `landing-page-writer` | Step 1 | Steps 3, 6, 7, 8 |
-| 3 | `meta-description-generator` | Steps 1, 2 | Steps 6, 8 |
-| 4 | `content-cluster` | Step 1 | Steps 5, 7 |
-| 5 | `blog-writer` | Steps 1, 4 | Steps 6, 7, 8 |
-| 6 | `content-quality-auditor` | Steps 1, 2, 5 | Step 7 |
-| 7 | `internal-linking` | Steps 2, 4, 5, 6 | Step 8 |
-| 8 | `schema-generator` | Steps 1, 2, 3, 5, 7 | `final_output` |
+| Phase | Skill | Purpose |
+|------|-------|---------|
+| Audit | `content-quality-auditor` | Technical, content, AEO, and conversion audit |
+| Research | `keyword-research` | Owner-confirmed and live search-intent strategy |
+| Foundation | `content-cluster` | Foundational pages and 20-day calendar |
+| Writing | `landing-page-writer`, `blog-writer` | Conversion pages and intent-led articles |
+| Metadata | `meta-description-generator` | Title, description, and social metadata |
+| Links | `internal-linking` | Semantic links, product paths, and orphan fixes |
+| Structure | `schema-generator` | Valid structured data for visible content |

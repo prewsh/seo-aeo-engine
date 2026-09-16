@@ -1,11 +1,13 @@
 import json
 import os
 
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+
 def load_template(template_name):
     """
     Loads a JSON-LD template from the references directory.
     """
-    path = f"../references/{template_name}.json"
+    path = os.path.join(SCRIPT_DIR, "..", "references", f"{template_name}.json")
     if os.path.exists(path):
         with open(path, 'r') as f:
             return json.load(f)

@@ -1,11 +1,11 @@
 # Internal Linking Skill
 
 ## Description
-Activate this skill when the user wants to build, audit, or optimise 
-the internal link structure across a set of pages or a full site. 
-Trigger phrases include: "internal linking strategy", "find internal 
-link opportunities", "link these pages together", "internal link map", 
-"suggest anchor text", "fix orphan pages", "internal links for 
+Activate this skill when the user wants to build, audit, or optimise
+the internal link structure across a set of pages or a full site.
+Trigger phrases include: "internal linking strategy", "find internal
+link opportunities", "link these pages together", "internal link map",
+"suggest anchor text", "fix orphan pages", "internal links for
 [page or topic]", "link equity distribution".
 
 ---
@@ -18,23 +18,27 @@ link opportunities", "link these pages together", "internal link map",
       "title": "string — page or post title",
       "url": "string — URL if published, leave blank if not yet live",
       "primary_keyword": "string — the keyword this page targets",
-      "page_type": "pillar | cluster-article | landing-page | 
+      "page_type": "pillar | cluster-article | landing-page |
                     blog-post | product-page",
       "content_summary": "string — 1-2 sentences describing the page"
     }
   ],
-  "focus_page": "string — title of the page you most want to 
+  "focus_page": "string — title of the page you most want to
                   boost with incoming links",
-  "cluster_context": "string — optional, paste content cluster 
-                       output to inform link map"
+  "cluster_context": "string — optional, paste content cluster
+                       output to inform link map",
+  "product_pages": ["string — product, signup, pricing, or demo pages that should receive relevant CTAs"],
+  "audit_findings": "string — optional orphan, cannibalization, or priority findings"
 }
 ```
+
+For a foundational content system, ensure every article has a contextual path to a relevant product, signup, pricing, demo, or next-step page. Do not add the same CTA or exact-match anchor mechanically to every article; match the destination to the reader’s intent.
 
 ---
 
 ## Link Type Definitions
 
-This skill recognises four distinct link types. 
+This skill recognises four distinct link types.
 Every suggestion must be labelled with one:
 
 | Link Type               | Direction                          | SEO Purpose                                 |
@@ -44,7 +48,7 @@ Every suggestion must be labelled with one:
 | Cluster → Cluster       | Cluster post links to related post | Builds semantic depth across the topic      |
 | Contextual Boost        | Any page → focus page              | Concentrates link equity on target page     |
 
-**Rule:** Every cluster article must have at least one 
+**Rule:** Every cluster article must have at least one
 Cluster → Pillar link. No exceptions.
 
 ---
@@ -61,8 +65,8 @@ Anchor text is critical. Follow these rules on every suggestion:
 | Generic anchor ("click here", "read more")| Never use — flag as error          |
 | Naked URL as anchor                      | Avoid unless no alternative        |
 
-If the skill detects the same exact-match anchor being used 
-more than once for the same target page, flag it as a 
+If the skill detects the same exact-match anchor being used
+more than once for the same target page, flag it as a
 **Cannibalization Risk** in the output.
 
 ---
@@ -88,7 +92,7 @@ The skill must always produce output in this exact format:
 
 ## Orphan Page Alert
 
-Pages with no incoming internal links — these are invisible 
+Pages with no incoming internal links — these are invisible
 to search engines and must be linked immediately:
 
 | Page Title                  | URL                  | Fix                              |
@@ -197,31 +201,33 @@ Cross-links between cluster articles:
 
 ## Execution Steps
 
-1. Read `cluster_context` if provided — use it to understand 
+1. Read `cluster_context` if provided — use it to understand
    the pillar/cluster relationships before mapping any links
-2. Index all pages by `page_type` — pillar pages should receive 
+2. Index all pages by `page_type` — pillar pages should receive
    the most incoming links by default
-3. Run orphan detection — flag any page with zero incoming 
+3. Run orphan detection — flag any page with zero incoming
    links from other pages in the input set
-4. Build semantic overlap matrix — match pages by 
-   `primary_keyword` similarity and `content_summary` 
+4. Build semantic overlap matrix — match pages by
+   `primary_keyword` similarity and `content_summary`
    to identify natural linking opportunities
-5. Assign each opportunity a link type from the 
+5. Assign each opportunity a link type from the
    Link Type Definitions table
-6. Write a context sentence for every suggestion — 
-   the sentence should flow naturally and make the anchor 
+6. Write a context sentence for every suggestion —
+   the sentence should flow naturally and make the anchor
    text feel editorially placed, not forced
-7. Check anchor text across all suggestions — flag any 
-   exact-match anchor used more than once for the same 
+7. Check anchor text across all suggestions — flag any
+   exact-match anchor used more than once for the same
    target page as a Cannibalization Risk
-8. Sort all opportunities into High, Medium, and Low 
+8. Sort all opportunities into High, Medium, and Low
    priority tiers based on link type and focus page impact
 9. Build the Link Equity Map showing authority flow
-10. Run the Links Per Page check — flag any page 
+10. Run the Links Per Page check — flag any page
     exceeding 100 outgoing links
-11. Execute `scripts/link_suggester.py` to verify semantic 
-    overlap scores programmatically — if unavailable, 
-    complete manually and note 
+11. Check product-page paths separately — confirm each
+    foundational article has at least one relevant conversion route
+12. Execute `scripts/link_suggester.py` to verify semantic
+    overlap scores programmatically — if unavailable,
+    complete manually and note
     "Script verification skipped" in Summary
 
 ---
@@ -229,18 +235,18 @@ Cross-links between cluster articles:
 ## Script Reference
 
 **Script:** `scripts/link_suggester.py`
-**Invocation:** `python scripts/link_suggester.py 
---pages "[json_array_of_pages]" 
+**Invocation:** `python scripts/link_suggester.py
+--pages "[json_array_of_pages]"
 --focus "[focus_page_title]"`
-**Outputs:** semantic similarity scores between pages, 
+**Outputs:** semantic similarity scores between pages,
 orphan page list, anchor frequency report
-**Fallback:** if script unavailable, complete all checks 
-manually using the checklists above and note 
+**Fallback:** if script unavailable, complete all checks
+manually using the checklists above and note
 "Script verification skipped" in the Summary section
 
 ---
 
 ## Connected Skills
-- Receives output from: `content-cluster`, 
+- Receives output from: `content-cluster`,
   `content-quality-auditor`
 - Feeds output to: `schema-generator`

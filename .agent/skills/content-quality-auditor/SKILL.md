@@ -1,10 +1,15 @@
+---
+name: content-quality-auditor
+description: Audit a website, codebase, page, or content set for technical SEO, search intent, AEO, conversion paths, and publishing readiness, then produce prioritized fixes that can be implemented and verified.
+---
+
 # Content Quality Auditor Skill
 
 ## Description
-Activate this skill when the user wants to audit, review, or score 
-existing content for SEO and AEO performance. Trigger phrases include: 
-"audit this content", "SEO review", "AEO audit", "check this page", 
-"score this article", "content auditor", "what's wrong with this content", 
+Activate this skill when the user wants to audit, review, or score
+a website, codebase, URL, page, or content set for SEO and AEO performance. Trigger phrases include:
+"audit this content", "SEO review", "AEO audit", "check this page",
+"score this article", "content auditor", "what's wrong with this content",
 "review this landing page", "analyze content quality".
 
 ---
@@ -12,14 +17,20 @@ existing content for SEO and AEO performance. Trigger phrases include:
 ## Input Format
 ```json
 {
-  "content": "string — paste raw content text OR provide a URL",
-  "input_type": "text | url",
+  "content": "string — paste raw content, provide a URL, or provide a project path",
+  "input_type": "text | url | website | codebase",
   "primary_keyword": "string — the main keyword this content should rank for",
   "secondary_keywords": ["string"],
   "content_type": "landing-page | blog-post | pillar-page | product-page",
-  "word_count_target": "integer — expected word count, default 1500"
+  "word_count_target": "integer — expected word count, default 1500",
+  "business_context": "string — optional description of the business and conversion goal",
+  "existing_content": ["string — optional URLs or titles already published"]
 }
 ```
+
+For a new project, default to a full website/codebase audit before recommending new content. If the user has not supplied target keywords, identify candidate keywords from the site and ask which ones matter before finalizing the content strategy. If the user does not know, continue with a clearly labelled fallback strategy based on observed search intent.
+
+Read [references/seo-audit-checklist.md](references/seo-audit-checklist.md) for the audit dimensions, evidence rules, and audit-to-implementation loop.
 
 ---
 
@@ -51,7 +62,7 @@ The skill must always produce output in this exact format:
 | AEO Score           | [X/100]   | [label] |
 | Readability Score   | [X/100]   | [label] |
 
-**Verdict:** [One sentence summary of the content's current state 
+**Verdict:** [One sentence summary of the content's current state
 and the single most important fix needed.]
 
 ---
@@ -68,7 +79,7 @@ and the single most important fix needed.]
 
 **Issue:** [Specific problem, e.g. "Primary keyword missing from H1"]
 **Severity:** Critical
-**Fix:** [Exact instruction, e.g. "Rewrite H1 to include '[keyword]' 
+**Fix:** [Exact instruction, e.g. "Rewrite H1 to include '[keyword]'
 naturally within the first 6 words"]
 
 **Issue:** [Specific problem]
@@ -85,8 +96,8 @@ naturally within the first 6 words"]
 
 | Keyword              | Found | Occurrences | Density | Target   | Status  |
 |----------------------|-------|-------------|---------|----------|---------|
-| [primary keyword]    | Yes/No| [n]         | [x.x%]  | 0.5–1.5% | ✅ / ❌ |
-| [secondary keyword]  | Yes/No| [n]         | [x.x%]  | 0.3–0.8% | ✅ / ❌ |
+| [primary keyword]    | Yes/No| [n]         | [x.x%]  | Natural use | ✅ / ❌ |
+| [secondary keyword]  | Yes/No| [n]         | [x.x%]  | Natural use | ✅ / ❌ |
 
 #### Heading Structure
 
@@ -129,11 +140,11 @@ H3 count: [n] — should only appear inside H2 sections
 
 #### ❌ Critical Issues — Fix Before Publishing
 
-**Issue:** [Specific AEO problem, 
+**Issue:** [Specific AEO problem,
 e.g. "No TL;DR or direct-answer block found"]
 **Severity:** Critical
-**Fix:** [Exact instruction, e.g. "Add a TL;DR block immediately 
-after the H1 — 2–3 sentences that directly answer the article's 
+**Fix:** [Exact instruction, e.g. "Add a TL;DR block immediately
+after the H1 — 2–3 sentences that directly answer the article's
 core question. This is the block AI engines extract first."]
 
 #### ⚠️ Warnings — Fix Soon
@@ -214,40 +225,28 @@ Work through these in order:
 
 ## Execution Steps
 
-1. Detect `input_type` — if URL, fetch and extract raw text first 
-   before running any checks
-2. Run keyword analysis — count occurrences, calculate density, 
-   check placement in H1, first 100 words, and at least one H2
-3. Parse heading structure — count H1s, H2s, H3s, flag violations
-4. Check meta elements — title tag, meta description, length, 
-   keyword inclusion
-5. Run word count and readability checks — sentence length, 
-   paragraph density, passive voice ratio
-6. Run AEO signal checklist — check for each signal in the table 
-   above and record found/not found with count
-7. Run extractability assessment — for each question type, 
-   determine whether a direct, liftable answer exists in the content
-8. Calculate SEO score, AEO score, and readability score 
-   against the rubric defined in the Scoring System section
-9. Build the prioritised fix list — critical issues first, 
-   polish items last
-10. Calculate projected scores after all fixes are applied
-11. Execute `scripts/run_audit.py` to verify keyword density 
-    calculations and heading structure programmatically — 
-    if script is unavailable, proceed with manual analysis 
-    and flag that script verification was skipped
+1. Detect `input_type` — inspect the project structure for a codebase, fetch a URL when allowed, or analyze supplied text.
+2. Establish the business, audience, conversion goal, existing content, and known target keywords. If keywords are missing, produce candidate keywords but ask for confirmation before treating them as final.
+3. Check technical SEO: crawlability, indexability, robots.txt, sitemap, canonical URLs, redirects, status codes, metadata, structured data, mobile/performance signals, image text alternatives, and broken links.
+4. Check information architecture and content: page purpose, search intent, H1/H2 hierarchy, topical coverage, duplication, cannibalization, thin pages, internal links, orphan pages, and conversion paths.
+5. Run keyword analysis using natural placement and intent alignment. Report counts as evidence, never as a mandatory density target.
+6. Run the AEO signal checklist and extractability assessment for direct answers, definitions, steps, FAQs, comparisons, and visible supporting evidence.
+7. Score SEO, AEO, readability, and conversion readiness against the rubric, including confidence and evidence for each major finding.
+8. Build a prioritized fix plan with exact files/pages affected, implementation notes, dependencies, and verification criteria.
+9. If implementation is authorized, apply the fixes in priority order, re-run the audit, and report before/after results. Never publish or mutate external accounts without explicit authorization.
+10. Execute `scripts/run_audit.py` to verify supported text checks. If unavailable, proceed manually and flag script verification as skipped.
 
 ---
 
 ## Script Reference
 
 **Script:** `scripts/run_audit.py`
-**Invocation:** `python scripts/run_audit.py --input "[content_or_path]" 
+**Invocation:** `python scripts/run_audit.py --input "[content_or_path]"
 --keyword "[primary_keyword]"`
-**Outputs:** keyword density report, heading count, 
+**Outputs:** keyword density report, heading count,
 sentence length averages
-**Fallback:** if script unavailable, complete all checks manually 
-using the checklists above and note "Script verification skipped" 
+**Fallback:** if script unavailable, complete all checks manually
+using the checklists above and note "Script verification skipped"
 in the Summary section
 
 ---
